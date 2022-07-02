@@ -13,7 +13,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class UpdatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'image|sometimes',
+            'category'=> 'required'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+      if($this->image === null){
+        $this->request->remove('image');
+      }
     }
 }
